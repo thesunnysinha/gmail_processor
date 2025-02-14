@@ -2,8 +2,8 @@ import pytest
 import logging
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, Email
-from cli import GmailProcessor
+from core.models import Base, Email
+from core.gmail_processor import GmailProcessor
 from faker import Faker
 
 # Initialize Faker
@@ -61,8 +61,7 @@ def test_fetch_emails(monkeypatch, db_session):
         
         return MockGmailService()
 
-    monkeypatch.setattr("cli.GmailProcessor.authenticate", mock_authenticate)
-    monkeypatch.setattr("cli.build", lambda *args, **kwargs: mock_service())
+    monkeypatch.setattr("manage.GmailProcessor.authenticate", mock_authenticate)
 
     processor.fetch_emails()
     emails = db_session.query(Email).all()

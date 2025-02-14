@@ -1,8 +1,8 @@
 import click
 import logging
-from db import SessionDep, Base, engine
-from gmail_processor import GmailProcessor
-from utils import get_rules
+from core.db import SessionDep, Base, engine
+from core.gmail_processor import GmailProcessor
+from core.utils import get_rules
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

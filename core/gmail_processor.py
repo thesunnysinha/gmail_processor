@@ -6,9 +6,9 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from db import SessionDep
-from models import Email, EmailSchema
-from config import TOKEN_FILE, CREDENTIALS_FILE
+from core.db import SessionDep
+from core.models import Email, EmailSchema
+from core.config import TOKEN_FILE, CREDENTIALS_FILE
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

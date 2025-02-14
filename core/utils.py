@@ -1,5 +1,5 @@
 import orjson
-from config import RULES_FILE
+from core.config import RULES_FILE
 
 def get_rules():
     """Get the rules from the rules file."""

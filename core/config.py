@@ -1,4 +1,3 @@
-import os
 
 # Database configuration
 DB_PATH = "sqlite:///emails.db"

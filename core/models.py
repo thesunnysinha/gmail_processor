@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, create_engine
 from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel, Field
 import datetime
-from config import DB_PATH
-from db import Base
+from core.config import DB_PATH
+from core.db import Base
 
 
 class Email(Base):
