@@ -1,0 +1,7 @@
+email.db
+
+test_emails.db
+
+venv/
+
+__pycache__/

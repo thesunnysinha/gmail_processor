@@ -1,0 +1,14 @@
+[
+    {
+        "predicate": "All",
+        "conditions": [
+            {"field": "From", "predicate": "Contains", "value": "tenmiles.com"},
+            {"field": "Subject", "predicate": "Contains", "value": "Interview"},
+            {"field": "Date Received", "predicate": "Less than", "value": "2"}
+        ],
+        "actions": [
+            {"action": "Move Message", "to_mailbox": "Inbox"},
+            {"action": "Mark as Read"}
+        ]
+    }
+]
