@@ -9,7 +9,3 @@ TOKEN_FILE = "token.json"
 
 # Rules JSON file
 RULES_FILE = "rules.json"
-
-# Ensure token file exists
-if not os.path.exists(TOKEN_FILE):
-    open(TOKEN_FILE, "w").close()
