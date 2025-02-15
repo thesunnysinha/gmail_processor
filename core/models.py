@@ -26,11 +26,3 @@ class EmailSchema(BaseModel):
     snippet: str = Field(default="", description="Email snippet content")
     received_at: datetime.datetime = Field(default_factory=datetime.datetime.utcnow, description="Email received timestamp")
     is_processed: bool = Field(default=False, description="Flag indicating if the email was processed")
-
-# Database setup
-engine = create_engine(DB_PATH, echo=True)
-SessionLocal = sessionmaker(bind=engine)
-
-def init_db():
-    """ Initialize the database. """
-    Base.metadata.create_all(engine)
