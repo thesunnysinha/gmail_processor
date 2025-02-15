@@ -32,9 +32,9 @@ pip install -r requirements.txt
 ```
 
 ### 4️⃣ Set Up OAuth Credentials
-- Go to `Google Cloud Console`
+- Go to [Google Cloud Console](https://console.cloud.google.com/)
 - Create OAuth 2.0 credentials for Gmail API
-- Download `credentials.json` and place it in the project root.
+- Download `credentials.json` and place it in the project's secret directory.
 
 ### 📌 Usage
 
