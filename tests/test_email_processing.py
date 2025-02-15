@@ -5,12 +5,11 @@ from sqlalchemy.orm import sessionmaker
 from core.models import Base, Email
 from core.gmail_processor import GmailProcessor
 from faker import Faker
+from core.config import TEST_DB_PATH
 
 # Initialize Faker
 fake = Faker()
 
-# Test database setup
-TEST_DB_PATH = "sqlite:///test_emails.db"
 engine = create_engine(TEST_DB_PATH, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
