@@ -1,8 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from pydantic import BaseModel, Field
 import datetime
-from core.config import DB_PATH
 from core.db import Base
 
 
