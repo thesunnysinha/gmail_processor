@@ -1,11 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
-from pydantic import BaseModel, Field
 import datetime
 from core.db import Base
 
-
 class Email(Base):
-    """ ORM model for storing emails in the database. """
+    """Model for storing emails in the database. """
     __tablename__ = "emails"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -13,14 +11,5 @@ class Email(Base):
     sender = Column(String, nullable=False)
     subject = Column(String, nullable=False)
     snippet = Column(String, nullable=True)
-    received_at = Column(DateTime, default=datetime.datetime.utcnow)
+    received_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     is_processed = Column(Boolean, default=False)
-
-class EmailSchema(BaseModel):
-    """ Pydantic schema for email validation. """
-    msg_id: str = Field(..., description="Unique message ID from Gmail API")
-    sender: str = Field(..., description="Sender email address")
-    subject: str = Field(..., description="Email subject")
-    snippet: str = Field(default="", description="Email snippet content")
-    received_at: datetime.datetime = Field(default_factory=datetime.datetime.utcnow, description="Email received timestamp")
-    is_processed: bool = Field(default=False, description="Flag indicating if the email was processed")
