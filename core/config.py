@@ -13,6 +13,9 @@ TOKEN_FILE = "secrets/token.json"
 # Rules JSON file
 RULES_FILE = "rules.json"
 
+# Gmail API scopes
+SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
+
 # Create secrets directory if it doesn't exist
 secrets_dir = os.path.dirname(TOKEN_FILE)
 if not os.path.exists(secrets_dir):

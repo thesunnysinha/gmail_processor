@@ -20,7 +20,7 @@ def db_session():
     session = TestingSessionLocal()
     yield session
     session.close()
-    Base.metadata.drop_all(engine)
+    # Base.metadata.drop_all(engine)
 
 def test_email_model(db_session):
     """ Test email model creation """
@@ -36,21 +36,27 @@ def test_fetch_emails(monkeypatch, db_session):
     """ Mock Gmail API and test fetching emails using GmailProcessor """
     processor = GmailProcessor(db_session)
     
-    def mock_authenticate():
+    def mock_authenticate(self):
         return None  # Skip authentication in tests
 
     def mock_service():
         class MockMessages:
             def list(self, **kwargs):
-                return {"messages": [{"id": "1"}]}
+                class MockListResponse:
+                    def execute(self):
+                        return {"messages": [{"id": "1"}]}
+                return MockListResponse()
             
             def get(self, **kwargs):
-                return {
-                    "id": "1",
-                    "payload": {"headers": [{"name": "From", "value": fake.email()},
-                                               {"name": "Subject", "value": fake.sentence()}]},
-                    "snippet": fake.text()
-                }
+                class MockGetResponse:
+                    def execute(self):
+                        return {
+                            "id": "1",
+                            "payload": {"headers": [{"name": "From", "value": fake.email()},
+                                                    {"name": "Subject", "value": fake.sentence()}]},
+                            "snippet": fake.text()
+                        }
+                return MockGetResponse()
 
         class MockGmailService:
             def users(self):
@@ -60,7 +66,8 @@ def test_fetch_emails(monkeypatch, db_session):
         
         return MockGmailService()
 
-    monkeypatch.setattr("manage.GmailProcessor.authenticate", mock_authenticate)
+    monkeypatch.setattr("core.gmail_processor.GmailProcessor.authenticate", mock_authenticate)
+    monkeypatch.setattr("core.gmail_processor.build", lambda *args, **kwargs: mock_service())
 
     processor.fetch_emails()
     emails = db_session.query(Email).all()
@@ -98,6 +105,28 @@ def test_apply_rules(db_session, monkeypatch):
             ]
         },
     ]
+
+    def mock_authenticate(self):
+        return None  # Skip authentication in tests
+
+    def mock_service():
+        class MockMessages:
+            def modify(self, userId, id, body):
+                class MockModifyResponse:
+                    def execute(self):
+                        return None
+                return MockModifyResponse()
+
+        class MockGmailService:
+            def users(self):
+                return self
+            def messages(self):
+                return MockMessages()
+        
+        return MockGmailService()
+
+    monkeypatch.setattr("core.gmail_processor.GmailProcessor.authenticate", mock_authenticate)
+    monkeypatch.setattr("core.gmail_processor.build", lambda *args, **kwargs: mock_service())
 
     processor.apply_rules(rules)
 

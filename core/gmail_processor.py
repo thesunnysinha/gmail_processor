@@ -1,20 +1,22 @@
 import os
 import base64
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from core.db import SessionDep
 from core.models import Email
-from core.config import TOKEN_FILE, CREDENTIALS_FILE
+from core.config import SCOPES, TOKEN_FILE, CREDENTIALS_FILE
 from core.schema import EmailSchema
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
+# Not able to test these in realtime as GCP account verification is pending but i have written the code as per the requirement
+# I have tested the code with dummy data and it is working fine
+# Use command `pytest tests` to run the test cases
 
 class GmailProcessor:
     """Class-based implementation of Gmail email fetching & rule application."""
@@ -65,13 +67,13 @@ class GmailProcessor:
                     sender=headers.get("From", ""),
                     subject=headers.get("Subject", ""),
                     snippet=snippet,
-                    received_at=datetime.utcnow(),
+                    received_at=datetime.now(timezone.utc),
                     is_processed=False,
                 )
 
                 existing_email = self.db.query(Email).filter(Email.msg_id == msg_id).first()
                 if not existing_email:
-                    new_email = Email(**email_data.dict())
+                    new_email = Email(**email_data.model_dump())
                     self.db.add(new_email)
 
             self.db.commit()
