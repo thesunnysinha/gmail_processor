@@ -99,7 +99,7 @@ class GmailProcessor:
                     for condition in rule["conditions"]:
                         field_value = field_mappings.get(condition["field"], "")
                         if isinstance(field_value, datetime):
-                            field_value = (datetime.utcnow() - field_value).days
+                            field_value = (datetime.now(timezone.utc) - field_value).days
 
                         match condition["predicate"]:
                             case "Contains" if condition["value"] in str(field_value):
