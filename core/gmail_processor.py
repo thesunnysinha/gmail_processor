@@ -29,10 +29,15 @@ class GmailProcessor:
             raise FileNotFoundError(f"Missing credentials file: {CREDENTIALS_FILE}. Please provide a valid file.")
 
         if os.path.exists(TOKEN_FILE):
-            self.creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
-            if self.creds and self.creds.expired and self.creds.refresh_token:
-                self.creds.refresh(Request())
-        
+            try:
+                self.creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
+                if self.creds and self.creds.expired and self.creds.refresh_token:
+                    self.creds.refresh(Request())
+            except Exception as e:
+                logging.error(f"Error loading credentials from token file: {e}")
+                os.remove(TOKEN_FILE)
+                self.creds = None
+
         if not self.creds or not self.creds.valid:
             logging.warning("Token file not found or invalid. A new authentication flow will be initiated.")
             flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
