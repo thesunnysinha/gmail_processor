@@ -85,4 +85,3 @@ pytest tests/
 - Click (CLI)
 - SQLite3 (Database)
 - Pytest (Testing)
-- python
