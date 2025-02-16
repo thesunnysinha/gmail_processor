@@ -1,5 +1,7 @@
 # Gmail Email Processor
 
+A standalone Python script that integrates with Gmail API and performs some rule based operations on emails.
+
 This project authenticates with **Gmail API** using OAuth, fetches emails, and applies rule-based actions. It uses **SQLAlchemy (SQLite3)** for storage, **Pydantic** for validation, and **Click** for CLI-based execution.
 
 ## 🚀 Features
@@ -10,6 +12,19 @@ This project authenticates with **Gmail API** using OAuth, fetches emails, and a
 - ✅ **Apply rule-based filtering from a JSON file**
 - ✅ **Command-line interface (CLI)**
 - ✅ **Modular, maintainable, and scalable**
+
+## Task Details & Breakdown:
+1. This project is meant to be a standalone Python script, not a web server project.
+Use any 3rd party libraries you need for the assignment.
+2. Authenticate to Google’s Gmail API using OAuth (use Google’s official Python
+client) and fetch a list of emails from your Inbox. Do NOT use IMAP .
+3. Come up with a database table representation and store these emails there. Use
+any relational database for this (Postgres / MySQL / SQLite3).
+4. Now that you can fetch emails, write another script that can process emails (in
+Python code, not using Gmail’s Search) based on some rules and take some
+actions on them using the REST API.
+5. These rules can be stored in a JSON file. The file should have a list of rules.
+Each rule has a set of conditions with an overall predicate and a set of actions.
 
 ## 📌 Installation
 
