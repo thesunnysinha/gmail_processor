@@ -20,7 +20,7 @@ def db_session():
     session = TestingSessionLocal()
     yield session
     session.close()
-    # Base.metadata.drop_all(engine)
+    Base.metadata.drop_all(engine)
 
 def test_email_model(db_session):
     """ Test email model creation """
