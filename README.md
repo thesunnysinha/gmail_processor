@@ -56,6 +56,10 @@ python manage.py apply_rules
 pytest tests/
 ```
 
+## Test Result
+
+![Test](./test_result/test_result.png)
+
 ### 📌 Example Rule in rules.json
 ```json
 [
