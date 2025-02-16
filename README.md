@@ -63,7 +63,7 @@ python manage.py fetch
 ```
 🔹 **Apply Rules to Emails**
 ```sh
-python manage.py apply_rules
+python manage.py applyrules
 ```
 
 ### 📌 Running Tests

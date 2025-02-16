@@ -25,9 +25,9 @@ def fetch():
     db.close()
 
 @cli.command(help="Apply filtering rules to stored emails.")
-def apply_rules():
+def applyrules():
     db = SessionDep()
-    processor = GmailProcessor()
+    processor = GmailProcessor(db)
     rules = get_rules()
     processor.apply_rules(rules)
     db.close()
