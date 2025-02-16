@@ -1,5 +1,6 @@
 import pytest
 import logging
+import base64
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from core.models import Base, Email
@@ -54,7 +55,7 @@ def test_fetch_emails(monkeypatch, db_session):
                             "id": "1",
                             "payload": {"headers": [{"name": "From", "value": fake.email()},
                                                     {"name": "Subject", "value": fake.sentence()}]},
-                            "snippet": fake.text()
+                            "snippet": base64.urlsafe_b64encode(fake.text().encode()).decode()
                         }
                 return MockGetResponse()
 
